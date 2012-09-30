@@ -1,4 +1,9 @@
-dotemacs
-========
+alvaro-cuesta/dotemacs
+======================
 
-.emacs files
+My .emacs files for:
+
+- Fundamental/Text
+- Python
+
+Tested with `emacs24`.
