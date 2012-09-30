@@ -1,0 +1,7 @@
+#!/bin/bash
+git clone https://github.com/gabrielelanaro/emacs-for-python.git ~/.emacs.python.d
+cp ./pycheckers ~/.emacs.python/
+echo "#!/bin/bash" > ~/emacs-py.sh
+echo "emacs -q -l ~/.emacs.python" >> ~/emacs-py.sh
+chmod +x ~/emacs-py.sh
+cp ./.emacs.python ~
