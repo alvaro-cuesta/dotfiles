@@ -1,0 +1,61 @@
+[core]
+	pager = less -r
+[user]
+	name = alvaro-cuesta
+	email = alvaro-cuesta@GitHub
+[alias]
+	a = !git add . && git status
+	au = !git add -u && git status
+	aa = !git add . && git add -u && git status
+	b = branch
+	c = commit
+	cm = commit -m
+	d = diff --color-words
+	dc = diff --color-words --cached
+	co = checkout
+	com = checkout master
+	ls = ls-files
+	rma = !git ls --deleted | xargs git rm
+	s = status
+	l = log --graph --pretty=format:'%C(yellow)%h%Creset%C(bold blue)%d%Creset %C(bold)%s%Creset %C(white dim)(by %an %ar)%Creset'
+	ll = log --stat --abbrev-commit
+	g = log --graph --simplify-by-decoration --pretty=format:'%d' --all
+	po = push origin
+	pom = push origin master
+	unstage = reset HEAD
+	amend = commit --amend -C HEAD
+	alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
+[merge]
+	log = true
+	summary = true
+[color]
+	ui = auto
+[color "diff"]
+	plain = normal
+	meta = dim
+	frag = bold
+	old = red
+	new = green
+	commit = yellow
+	whitespace = normal red
+[color "branch"]
+	current = green
+	local = normal
+	remote = red
+	plain = normal
+[color "status"]
+	header = normal
+	added = blue
+	updated = green
+	changed = red
+	untracked = dim
+	nobranch = yellow
+[color "grep"]
+	match = bold
+[color "interactive"]
+	prompt = normal
+	header = bold
+	help = yellow
+	error = red
+[color "log"]
+	header = bold
