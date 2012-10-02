@@ -1,7 +1,7 @@
 (load-file "~/.emacs.python.d/epy-init.el")
 (epy-setup-ipython)
 (epy-django-snippets)
-(epy-setup-checker "~/.emacs.python.d/pycheckers %f")
+(epy-setup-checker "pycheckers %f")
 
 (defun annotate-pdb ()
   (interactive)

@@ -1,2 +1,2 @@
 #!/bin/bash
-emacs -l ~/.emacs.python.d/init.el
+emacs -l ~/.python.emacs
