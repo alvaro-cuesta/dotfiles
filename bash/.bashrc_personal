@@ -3,3 +3,7 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 EDITOR=emacs
+
+source ~/.git-completion.bash
+
+[[ $- == *i* ]]   && . ~/.git-prompt/git-prompt.sh
