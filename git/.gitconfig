@@ -22,6 +22,7 @@
 	g = log --graph --simplify-by-decoration --pretty=format:'%d' --all
 	po = push origin
 	pom = push origin master
+	ignored = ls-files -o -i --exclude-standard
 	delete = branch -d
 	unstage = reset HEAD
 	amend = commit --amend -C HEAD

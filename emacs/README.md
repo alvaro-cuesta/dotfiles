@@ -8,5 +8,5 @@ sudo apt-get purge emacs-snapshot-common emacs-snapshot-bin-common emacs-snapsho
 Then, for emacs-snapshot:
 `sudo apt-get install emacs-snapshot-el emacs-snapshot-gtk emacs-snapshot`
 
-*Or* emacs24:
+**Or** emacs24:
 `sudo apt-get install emacs24 emacs24-el`
