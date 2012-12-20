@@ -1,0 +1,11 @@
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+xsetroot -cursor_name left_ptr
+setxkbmap -layout "es"
+VBoxClient-all &
+feh --bg-fill ~/Backgrounds/pencil.jpg
+
+compton --config ~/.compton.conf -b
+
+while xmonad; do
+    sleep 1
+done
