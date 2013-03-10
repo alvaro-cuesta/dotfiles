@@ -4,6 +4,8 @@ fi
 
 EDITOR=emacs
 
+alias lsa="ls -la --color=auto"
+
 source ~/.git-completion.bash
 
 [[ $- == *i* ]]   && . ~/.git-prompt/git-prompt.sh
