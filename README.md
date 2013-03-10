@@ -8,6 +8,10 @@ wget https://raw.github.com/defunkt/coffee-mode/master/coffee-mode.el -O ~/.emac
 wget https://raw.github.com/emacsmirror/nodejs-mode/master/nodejs-mode.el -O ~/.emacs.coffee.d/nodejs-mode.el
 ```
 
+## Python
+
+`git clone https://github.com/gabrielelanaro/emacs-for-python.git ~/.emacs.python.d`
+
 # TODO
 
 - Ido mode everywhere

@@ -1,1 +1,0 @@
-`git clone https://github.com/gabrielelanaro/emacs-for-python.git ~/.emacs.python.d`
