@@ -23,4 +23,4 @@
 
 (add-to-list 'load-path "~/.emacs.common/")
 (require 'no-easy-keys)
-(no-esasy-keys 1)
+(no-easy-keys 1)
