@@ -8,7 +8,20 @@ wget https://raw.github.com/git/git/master/contrib/completion/git-completion.bas
 echo "source ~/.bashrc_personal" >> ~/.bashrc
 ```
 
-# emacs (languages)
+# emacs
+
+```
+mkdir ~/.emacs.common/
+wget http://danamlund.dk/emacs/no-easy-keys.el -O ~/.emacs.common/no-easy-keys.el
+```
+
+## Clojure
+
+```
+git clone --recursive git://github.com/vedang/clojure-emacs.git ~/.emacs.clojure.d/
+wget http://raw.github.com/technomancy/leiningen/stable/bin/lein -O ~/bin/lein
+chmod 755 ~/bin/lein
+```
 
 ## CoffeeScript
 
