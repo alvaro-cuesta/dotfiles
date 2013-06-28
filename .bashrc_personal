@@ -2,9 +2,11 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-EDITOR=emacs
+export EDITOR="emacs -nw --no-desktop -Q"
 
-alias lsa="ls -la --color=auto"
+alias l="ls -CFBh --ignore='#*#' --color='always'"
+alias la="l -A"
+alias ll="la -l"
 
 source ~/.git-completion.bash
 
