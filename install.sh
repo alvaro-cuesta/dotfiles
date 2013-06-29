@@ -29,23 +29,20 @@ declare -a BACKUP_FILES=(~/.gitconfig ~/.git-prompt.conf ~/.bashrc_personal ~/.e
 
 for i in ${BACKUP_FILES[@]}
 do
-    if [[ -f "$i" ]]
-    then
-        mv $i $i.bak
-    fi
+    mv $i $i.bak
 done
 
-ln .gitconfig ~
-ln .git-prompt.conf ~
-ln .bashrc_personal ~
-ln ./.emacs.d/init.el ~/.emacs.d/
+ln -s $PWD/.gitconfig ~
+ln -s $PWD/.git-prompt.conf ~
+ln -s $PWD/.bashrc_personal ~
+ln -s $PWD/.emacs.d/init.el ~/.emacs.d/
 
 # Print differences with backed up files
 for i in ${BACKUP_FILES[@]}
 do
-    echo "Diffing $i"
-    if [[ -f "$i.bak" ]]
+    if [ -f $i.bak ]
     then
+	echo "Diffing $i"
         diff $i.bak $i
     fi
 done
