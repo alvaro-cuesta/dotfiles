@@ -29,7 +29,8 @@ declare -a BACKUP_FILES=(~/.gitconfig ~/.git-prompt.conf ~/.bashrc_personal ~/.e
 
 for i in ${BACKUP_FILES[@]}
 do
-    if [[ -f $i ]]; then
+    if [[ -f $i ]]
+    then
         mv $i $i.bak
     fi
 done
@@ -43,7 +44,8 @@ ln ./.emacs.d/init.el ~/.emacs.d/
 for i in ${BACKUP_FILES[@]}
 do
     echo "Diffing $i"
-    if [[ -f $i.bak ]]; then
+    if [[ -f $i.bak ]]
+    then
         diff $i.bak $i
     fi
 done
