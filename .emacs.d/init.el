@@ -25,6 +25,12 @@
 (require 'clojure-mode)
 (require 'clojure-test-mode)
 
+(autoload 'markdown-mode "markdown-mode"
+  "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))(require 'markdown-mode)
+
 
 (custom-set-variables
  '(column-number-mode t)
@@ -316,7 +322,7 @@ original" (interactive)
 (add-hook 'latex-mode-hook 'flyspell-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
 (add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'flyspell-mode-hook (lambda () (ispell-change-dictionary "en_US")))
+(add-hook 'text-mode-hook (lambda () (ispell-change-dictionary "en_US")))
 (add-hook 'flyspell-mode-hook 'flyspell-buffer)
 (add-hook 'python-mode-hook 'annotate-pdb)
 (add-hook 'after-change-major-mode-hook 'annotate-todo)

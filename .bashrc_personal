@@ -4,7 +4,7 @@ fi
 
 export EDITOR="emacs -nw --no-desktop -Q"
 
-alias l="ls -CFBh --ignore='#*#' --color='always'"
+alias l="ls -CFBh --ignore='#*#' --ignore='*~' --color='always'"
 alias la="l -A"
 alias ll="la -l"
 
