@@ -1,14 +1,120 @@
-;;(load-file "/home/kaod/emacs-for-python/epy-init.el")
 ;;(epy-setup-ipython)
 ;; (epy-django-snippets)
 ;; (epy-setup-checker "sh ~/bin/pychecker %f")
 
 
+
+;; ;; fgallina/python.el
+;; (require 'python (concat epy-install-dir "extensions/python.el"))
+
+;; ;; pymacs
+;; (require 'pymacs (concat epy-install-dir "extensions/pymacs.el"))
+
+;; ;; Ipython integration with fgallina/python.el
+;; (defun epy-setup-ipython ()
+;;   "Setup ipython integration with python-mode"
+;;   (interactive)
+
+;;   (setq
+;;    python-shell-interpreter "ipython"
+;;    python-shell-interpreter-args ""
+;;    python-shell-prompt-regexp "In \[[0-9]+\]: "
+;;    python-shell-prompt-output-regexp "Out\[[0-9]+\]: "
+;;    python-shell-completion-setup-code ""
+;;    python-shell-completion-string-code "';'.join(get_ipython().complete('''%s''')[1])\n"))
+
+;; (eval-after-load 'python
+;;   '(progn
+;;      ;;==================================================
+;;      ;; Virtualenv Commands
+;;      ;;==================================================
+;;      (autoload 'virtualenv-activate "virtualenv"
+;;        "Activate a Virtual Environment specified by PATH" t)
+;;      (autoload 'virtualenv-workon "virtualenv"
+;;        "Activate a Virtual Environment present using virtualenvwrapper" t)
+
+
+;;      ;; Not on all modes, please
+;;      ;; Be careful of mumamo, buffer file name nil
+;;      (add-hook 'python-mode-hook (lambda () (if (buffer-file-name)
+;;                                              (flymake-mode))))
+
+;;      ;; when we swich on the command line, switch in Emacs
+;;      ;;(desktop-save-mode 1)
+;;      (defun workon-postactivate (virtualenv)
+;;        (require 'virtualenv)
+;;        (virtualenv-activate virtualenv)
+;;        (desktop-change-dir virtualenv))))
+
+;; (autoload 'cython-mode "cython-mode" "Mode for editing Cython source files")
+
+;; (add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
+;; (add-to-list 'auto-mode-alist '("\\.pxd\\'" . cython-mode))
+;; (add-to-list 'auto-mode-alist '("\\.pxi\\'" . cython-mode))
+;; (add-to-list 'auto-mode-alist '("\\.py3\\'" . python-mode))
+
+
+
+
+
+
+;; (defun flymake-create-copy-file ()
+;;   "Create a copy local file"
+;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                      'flymake-create-temp-inplace)))
+;;     (file-relative-name
+;;      temp-file
+;;      (file-name-directory buffer-file-name))))
+
+;; (defun flymake-command-parse (cmdline)
+;;   "Parses the command line CMDLINE in a format compatible
+;;        with flymake, as:(list cmd-name arg-list)
+
+;; The CMDLINE should be something like:
+
+;;  flymake %f python custom.py %f
+
+;; %f will be substituted with a temporary copy of the file that is
+;;  currently being checked.
+;; "
+;;   (let ((cmdline-subst (replace-regexp-in-string "%f" (flymake-create-copy-file) cmdline)))
+;;     (setq cmdline-subst (split-string-and-unquote cmdline-subst))
+;;     (list (first cmdline-subst) (rest cmdline-subst))))
+
+;; (when (load-file (concat epy-install-dir "extensions/flymake-patch.el"))
+;;   (setq flymake-info-line-regex
+;;         (append flymake-info-line-regex '("unused$" "^redefinition" "used$")))
+;;   (load-library "flymake-cursor"))
+
+;; (defun epy-setup-checker (cmdline)
+;;   (add-to-list 'flymake-allowed-file-name-masks
+;;                (list "\\.py\\'" (apply-partially 'flymake-command-parse cmdline))))
+
+
+
+
+;; (require 'auto-complete-config nil t)
+;; (add-to-list 'ac-dictionary-directories (concat epy-install-dir "elpa-to-submit/auto-complete/dict/"))
+;; (setq ac-dwim t)
+;; (ac-config-default)
+;; (define-key ac-complete-mode-map "\t" 'ac-expand)
+;; (define-key ac-complete-mode-map "\r" 'ac-complete)
+;; (define-key ac-complete-mode-map "\M-n" 'ac-next)
+;; (define-key ac-complete-mode-map "\M-p" 'ac-previous)
+;; (add-hook 'python-mode-hook 'ac-python-mode-setup)
+;; (require 'auto-complete-config)
+;; (add-to-list 'ac-dictionary-directories
+;;           (concat epy-install-dir "auto-complete/ac-dict"))
+;; (ac-config-default)
+
+
+
 ;; TODO:
-;;  importar más de python?
 ;;  coffee/js lint
 ;;  Nodejs completion
 ;;  Coffee compeltion
+;;  web browser/google
+
 
 
 (add-to-list 'load-path "~/.emacs.d/")
@@ -203,6 +309,37 @@ original" (interactive)
       (delete-indentation t)
     (kill-line arg)))
 
+                                        ; patches by balle
+                                        ; http://www.datenterrorist.de
+(defun balle-python-shift-left ()
+  (interactive)
+  (let (start end bds)
+    (if (and transient-mark-mode
+             mark-active)
+        (setq start (region-beginning) end (region-end))
+      (progn
+        (setq bds (bounds-of-thing-at-point 'line))
+        (setq start (car bds) end (cdr bds))))
+    (python-indent-shift-left start end))
+  (setq deactivate-mark nil))
+
+(defun balle-python-shift-right ()
+  (interactive)
+  (let (start end bds)
+    (if (and transient-mark-mode
+             mark-active)
+        (setq start (region-beginning) end (region-end))
+      (progn
+        (setq bds (bounds-of-thing-at-point 'line))
+        (setq start (car bds) end (cdr bds))))
+    (python-indent-shift-right start end))
+  (setq deactivate-mark nil))
+
+(defun ido-define-keys () ;; C-n/p is more intuitive in vertical layout
+  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+
+
 ;; Aliases
 (defalias 'rs 'replace-string)
 (defalias 'qrr 'query-replace-regexp)
@@ -308,8 +445,11 @@ original" (interactive)
 
 (global-set-key "\C-xO" '(lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "<RET>") 'newline-and-indent)
-(global-set-key (kbd "C-<return>") 'newline)
+(global-set-key (kbd "C-<return>") 'newlineindent-new-comment-line)
 (global-set-key (kbd "M-<RET>") 'newline)
+
+(global-set-key [f11] 'flymake-goto-prev-error)
+(global-set-key [f12] 'flymake-goto-next-error)
 
 ;; Hooks
 
@@ -326,10 +466,14 @@ original" (interactive)
 (add-hook 'flyspell-mode-hook 'flyspell-buffer)
 (add-hook 'python-mode-hook 'annotate-pdb)
 (add-hook 'after-change-major-mode-hook 'annotate-todo)
-(defun ido-define-keys () ;; C-n/p is more intuitive in vertical layout
-  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
-  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
 (add-hook 'ido-setup-hook 'ido-define-keys)
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            (define-key python-mode-map (kbd "M-f")
+              'balle-python-shift-right)
+            (define-key python-mode-map (kbd "M-b")
+              'balle-python-shift-left)))
 
 
 ;; Print TOTD
