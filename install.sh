@@ -25,7 +25,7 @@ git clone git://github.com/lvv/git-prompt.git ~/.git-prompt
 wget https://raw.github.com/git/git/master/contrib/completion/git-completion.bash -O ~/.git-completion.bash
 
 # Backup files
-declare -a BACKUP_FILES=(~/.gitconfig ~/.git-prompt.conf ~/.bashrc_personal ~/.emacs.d/init.el
+declare -a BACKUP_FILES=(~/.gitconfig ~/.git-prompt.conf ~/.bashrc_personal ~/.emacs.d/init.el)
 
 for i in ${BACKUP_FILES[@]}
 do
