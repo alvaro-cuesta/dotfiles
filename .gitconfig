@@ -30,7 +30,6 @@
 	amend = commit --amend -C HEAD
 	alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
 	save = stash save
-	load = !git stash list | grep ' $1$' | awk "{ print $1 }" | sed "$ s/:$//"; echo
 	list = stash list
 	serve = daemon --reuseaddr --verbose  --base-path=. --informative-errors --export-all
 	patch = format-patch
