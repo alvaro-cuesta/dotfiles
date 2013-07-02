@@ -137,7 +137,6 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))(require 'markdown-mode)
 
-
 (custom-set-variables
  '(column-number-mode t)
  '(custom-enabled-themes (quote (wombat)))
@@ -165,6 +164,7 @@
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 98 :width normal)))))
 
 
+
 ;; Functions
 (defun kill-other-buffers ()
     "Kill all other buffers."
@@ -181,29 +181,6 @@
   "Kill ARG lines backward."
   (interactive "p")
   (kill-line (- 1 arg)))
-
-(defun smarter-move-beginning-of-line (arg)
-  "Move point back to indentation of beginning of line.
-
-Move point to the first non-whitespace character on this line.
-If point is already there, move to the beginning of the line.
-Effectively toggle between the first non-whitespace character and
-the beginning of the line.
-
-If ARG is not nil or 1, move forward ARG - 1 lines first.  If
-point reaches the beginning or end of the buffer, stop there."
-  (interactive "^p")
-  (setq arg (or arg 1))
-
-  ;; Move lines first
-  (when (/= arg 1)
-    (let ((line-move-visual nil))
-      (forward-line (1- arg))))
-
-  (let ((orig-point (point)))
-    (back-to-indentation)
-    (when (= orig-point (point))
-      (move-beginning-of-line 1))))
 
 (defun my-desktop ()
   "Load the desktop and enable autosaving"
@@ -228,7 +205,7 @@ point reaches the beginning or end of the buffer, stop there."
                  (where-is command t)
                  (buffer-string)))))))
 
-;; code borrowed from http://emacs-fu.blogspot.com/2010/01/duplicating-lines-and-commenting-them.html
+; code borrowed from http://emacs-fu.blogspot.com/2010/01/duplicating-lines-and-commenting-them.html
 (defun djcb-duplicate-line (&optional commentfirst)
   "comment line at point; if COMMENTFIRST is non-nil, comment the
 original" (interactive)
@@ -242,7 +219,7 @@ original" (interactive)
       (concat (if (= 0 (forward-line 1)) "" "\n") str "\n"))
     (forward-line -1)))
 
-;; Mark whole line
+; Mark whole line
 (defun mark-line (&optional arg)
   "Marks a line"
   (interactive "p")
@@ -280,8 +257,9 @@ original" (interactive)
   (highlight-lines-matching-regexp "pdb.set_trace()"))
 
 (defun annotate-todo ()
-  (font-lock-add-keywords nil
-                          '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-doc-face t))))
+  (font-lock-add-keywords
+   nil
+   '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-doc-face t))))
 
 (defun move-text-down (arg)
   "Move region (transient-mark-mode active) or current line
@@ -309,8 +287,8 @@ original" (interactive)
       (delete-indentation t)
     (kill-line arg)))
 
-                                        ; patches by balle
-                                        ; http://www.datenterrorist.de
+; patches by balle
+; http://www.datenterrorist.de
 (defun balle-python-shift-left ()
   (interactive)
   (let (start end bds)
@@ -335,20 +313,20 @@ original" (interactive)
     (python-indent-shift-right start end))
   (setq deactivate-mark nil))
 
-(defun ido-define-keys () ;; C-n/p is more intuitive in vertical layout
-  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
-  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
 
 
 ;; Aliases
 (defalias 'rs 'replace-string)
-(defalias 'qrr 'query-replace-regexp)
+
+
 
 ;; Key bindings
-(define-key function-key-map [(control tab)] [?\M-\t])
+(define-key function-key-map [(control tab)] [?\M-\t])  ; map Alt-Tab to Ctrl-Tab
 
-(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x C-b") 'ibuffer)  ; ibuffer by default
 
+; Auto-indent on finishing }, ), ]
+; TODO: enable only in programming modes, disable in comments
 (global-set-key (kbd "}")
                 (lambda ()
                   (interactive)
@@ -367,12 +345,14 @@ original" (interactive)
                   (insert "]")
                   (indent-for-tab-command)))
 
-(global-set-key (kbd "C-y") 'yank-and-indent)
-(global-set-key (kbd "C-k") 'kill-and-join-forward)
-
+; Aliases for M-x
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-c\C-m" 'execute-extended-command)
 
+(global-set-key (kbd "C-y") 'yank-and-indent)
+(global-set-key (kbd "C-k") 'kill-and-join-forward)
+
+; Movement/editing
 (global-set-key "\M-n"
                 (lambda ()
                   (interactive)
@@ -383,11 +363,6 @@ original" (interactive)
                   (previous-line 5)))
 
 (global-set-key "\C-l" 'goto-line)
-
-(global-set-key [remap move-beginning-of-line] 'smarter-move-beginning-of-line)
-
-(global-set-key (kbd "C-x M-k") 'kill-other-buffers)
-(global-set-key (kbd "C-x C-M-k") 'kill-all-buffers)
 
 (global-set-key "\C-h" 'backward-delete-char-untabify)
 (define-key isearch-mode-map "\C-h" 'isearch-delete-char)
@@ -429,51 +404,63 @@ original" (interactive)
 (global-set-key (kbd "M-<up>") 'move-text-up)
 (global-set-key (kbd "M-<down>") 'move-text-down)
 
-;; Programs
+; Programs
 (global-set-key (kbd "C-c t") 'ansi-term)
 (global-set-key (kbd "C-c p") 'proced)
 
-;; Font size
-(global-set-key "\M-+" 'text-scale-increase)
+; Font size
+(global-set-key (kbd "M-+") 'text-scale-increase)
 (global-set-key (kbd "C-M-+") 'text-scale-decrease)
 (global-set-key (kbd "M-<kp-add>") 'text-scale-increase)
 (global-set-key (kbd "M-<kp-subtract>") 'text-scale-decrease)
 
-;; Buffer navigation
-(global-set-key (kbd "<C-S-left>") 'previous-buffer)
-(global-set-key (kbd "<C-S-right>") 'next-buffer)
+; Buffer navigation
+(global-set-key (kbd "C-S-<left>") 'previous-buffer)
+(global-set-key (kbd "C-S-<right>") 'next-buffer)
+
+(global-set-key (kbd "C-x M-k") 'kill-other-buffers)
+(global-set-key (kbd "C-x C-M-k") 'kill-all-buffers)
 
 (global-set-key "\C-xO" '(lambda () (interactive) (other-window -1)))
-(global-set-key (kbd "<RET>") 'newline-and-indent)
-(global-set-key (kbd "C-<return>") 'newlineindent-new-comment-line)
-(global-set-key (kbd "M-<RET>") 'newline)
 
 (global-set-key [f11] 'flymake-goto-prev-error)
 (global-set-key [f12] 'flymake-goto-next-error)
 
-;; Hooks
 
+
+;; Hooks
 (add-hook 'after-change-major-mode-hook 'highlight-indentation-mode)
+(add-hook 'after-change-major-mode-hook 'annotate-todo)
+
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'before-save-hook
           (lambda ()
             (untabify (point-min) (point-max))))
+
 (add-hook 'latex-mode-hook 'visual-line-mode)
 (add-hook 'latex-mode-hook 'flyspell-mode)
+
 (add-hook 'text-mode-hook 'visual-line-mode)
 (add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'text-mode-hook (lambda () (ispell-change-dictionary "en_US")))
-(add-hook 'flyspell-mode-hook 'flyspell-buffer)
-(add-hook 'python-mode-hook 'annotate-pdb)
-(add-hook 'after-change-major-mode-hook 'annotate-todo)
-(add-hook 'ido-setup-hook 'ido-define-keys)
+(add-hook 'text-mode-hook
+          (lambda ()
+            (ispell-change-dictionary "en_US")))
 
+(add-hook 'flyspell-mode-hook 'flyspell-buffer)
+
+(add-hook 'ido-setup-hook
+          (lambda ()
+            (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+            (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+
+(add-hook 'python-mode-hook 'annotate-pdb)
 (add-hook 'python-mode-hook
           (lambda ()
             (define-key python-mode-map (kbd "M-f")
               'balle-python-shift-right)
             (define-key python-mode-map (kbd "M-b")
               'balle-python-shift-left)))
+
 
 
 ;; Print TOTD
