@@ -451,7 +451,7 @@ original" (interactive)
 (add-hook 'ido-setup-hook
           (lambda ()
             (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
-            (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+            (define-key ido-completion-map (kbd "C-p") 'ido-prev-match)))
 
 (add-hook 'python-mode-hook 'annotate-pdb)
 (add-hook 'python-mode-hook
